@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-mes <moel-mes@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:58:49 by moel-mes          #+#    #+#             */
-/*   Updated: 2024/11/12 13:59:16 by moel-mes         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:59:05 by moel-mes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,17 @@ void	creat_list(t_lst **list, int fd)
 
 char	*get_next_line(int fd)
 {
-	static t_lst	*list = NULL;
+	static t_lst	*list[1024] = {NULL};
 	char			*next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)
 		return (NULL);
-	creat_list(&list, fd);
-	if (list == NULL)
+	if (!list[fd])
+		creat_list(&list[fd], fd);
+	if (list[fd] == NULL)
 		return (NULL);
-	next_line = get_line(list);
-	free_list(&list, 0);
+	next_line = get_line(list[fd]);
+	free_list(&list[fd], 0);
 	return (next_line);
 }
 
@@ -112,21 +113,15 @@ char	*get_next_line(int fd)
 // 	int fd2 = open("../tests/test2.txt", O_RDONLY);
 // 	int fd3 = open("../tests/test3.txt", O_RDONLY);
 // 	i = 1;
-// 	while ((line = get_next_line(fd1)))
-// 	{
-// 		printf("line %d: %s\n", i++, line);
-// 		free(line);
-// 	}
-// 	i = 1;
-// 	while ((line = get_next_line(fd2)))
-// 	{
-// 		printf("line %d: %s\n", i++, line);
-// 		free(line);
-// 	}
-// 	i = 1;
-// 	while ((line = get_next_line(fd3)))
-// 	{
-// 		printf("line %d: %s\n", i++, line);
-// 		free(line);
-// 	}
+// 	line = get_next_line(fd3);
+//     printf("line %d: %s\n", i++, line);
+//     free(line);
+
+// 	line = get_next_line(fd2);
+//     printf("line %d: %s\n", i++, line);
+//     free(line);
+    
+// 	line = get_next_line(fd3);
+//     printf("line %d: %s\n", i++, line);
+//     free(line);
 // }
