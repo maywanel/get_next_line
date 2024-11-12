@@ -6,7 +6,7 @@
 /*   By: moel-mes <moel-mes@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:58:49 by moel-mes          #+#    #+#             */
-/*   Updated: 2024/11/12 13:59:05 by moel-mes         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:06:09 by moel-mes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,9 @@ char	*get_next_line(int fd)
 // 	line = get_next_line(fd3);
 //     printf("line %d: %s\n", i++, line);
 //     free(line);
-
 // 	line = get_next_line(fd2);
 //     printf("line %d: %s\n", i++, line);
 //     free(line);
-    
 // 	line = get_next_line(fd3);
 //     printf("line %d: %s\n", i++, line);
 //     free(line);
