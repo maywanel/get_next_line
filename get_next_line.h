@@ -6,7 +6,7 @@
 /*   By: moel-mes <moel-mes@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:58:59 by moel-mes          #+#    #+#             */
-/*   Updated: 2024/11/11 16:47:30 by moel-mes         ###   ########.fr       */
+/*   Updated: 2024/11/12 10:23:42 by moel-mes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void				append(t_lst **list, char *buff);
 void				creat_list(t_lst **list, int fd);
 char				*get_next_line(int fd);
 char				*get_line(t_lst *list);
-void				polish_list(t_lst **list, int i);
+void				free_list(t_lst **list, int i);
 t_lst				*find_last_node(t_lst *list);
 int					f_newline(t_lst *list);
 void				copy_str(t_lst *list, char *str);
