@@ -6,13 +6,13 @@
 /*   By: moel-mes <moel-mes@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:58:49 by moel-mes          #+#    #+#             */
-/*   Updated: 2024/11/11 16:54:06 by moel-mes         ###   ########.fr       */
+/*   Updated: 2024/11/12 10:21:52 by moel-mes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	polish_list(t_lst **list, int i)
+void	free_list(t_lst **list, int i)
 {
 	t_lst	*ln;
 	t_lst	*cn;
@@ -99,7 +99,7 @@ char	*get_next_line(int fd)
 	if (list == NULL)
 		return (NULL);
 	next_line = get_line(list);
-	polish_list(&list, 0);
+	free_list(&list, 0);
 	return (next_line);
 }
 
