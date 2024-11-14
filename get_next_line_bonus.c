@@ -6,7 +6,7 @@
 /*   By: moel-mes <moel-mes@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:58:49 by moel-mes          #+#    #+#             */
-/*   Updated: 2024/11/12 14:06:09 by moel-mes         ###   ########.fr       */
+/*   Updated: 2024/11/13 23:26:19 by moel-mes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_list(t_lst **list, int i)
 	dealloc(list, cn, buff);
 }
 
-char	*get_line(t_lst *list)
+char	*get_the_line(t_lst *list)
 {
 	int		len;
 	char	*next_str;
@@ -97,10 +97,12 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!list[fd])
 		creat_list(&list[fd], fd);
-	if (list[fd] == NULL)
+	if (!list[fd])
 		return (NULL);
-	next_line = get_line(list[fd]);
+	next_line = get_the_line(list[fd]);
 	free_list(&list[fd], 0);
+	if (!next_line)
+		return (NULL);
 	return (next_line);
 }
 
