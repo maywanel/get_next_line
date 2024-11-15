@@ -6,7 +6,7 @@
 /*   By: moel-mes <moel-mes@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:58:49 by moel-mes          #+#    #+#             */
-/*   Updated: 2024/11/13 18:13:22 by moel-mes         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:54:25 by moel-mes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,14 @@ void	free_list(t_lst **list, int i)
 	char	*buff;
 
 	buff = malloc(BUFFER_SIZE + 1);
-	cn = malloc(sizeof(t_lst));
-	if (!buff || !cn)
+	if (!buff)
 		return ;
+	cn = malloc(sizeof(t_lst));
+	if (!cn)
+	{
+		free(buff);
+		return ;
+	}
 	ln = find_last_node(*list);
 	j = 0;
 	while (ln->str_b[i] != '\0' && ln->str_b[i] != '\n')
@@ -40,8 +45,6 @@ char	*get_the_line(t_lst *list)
 	int		len;
 	char	*next_str;
 
-	if (!list)
-		return (NULL);
 	len = len_to_newline(list);
 	next_str = malloc(len + 1);
 	if (!next_str)
@@ -72,6 +75,8 @@ void	creat_list(t_lst **list, int fd)
 	int		i;
 	char	*buff;
 
+	if (BUFFER_SIZE >= 2147483647)
+		return ;
 	while (!f_newline(*list))
 	{
 		buff = malloc(BUFFER_SIZE + 1);
@@ -81,6 +86,8 @@ void	creat_list(t_lst **list, int fd)
 		if (i <= 0)
 		{
 			free(buff);
+			if (i < 0)
+				free_list(list, 0);
 			return ;
 		}
 		buff[i] = '\0';

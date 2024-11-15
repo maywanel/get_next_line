@@ -6,7 +6,7 @@
 /*   By: moel-mes <moel-mes@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:58:59 by moel-mes          #+#    #+#             */
-/*   Updated: 2024/11/13 16:42:28 by moel-mes         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:14:29 by moel-mes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 21477
 # endif
 
 typedef struct s_list
