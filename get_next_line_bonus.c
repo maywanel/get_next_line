@@ -58,12 +58,14 @@ char	*read_line(int fd, char **line, char *buf)
 	{
 		buf[r] = '\0';
 		*line = ft_strjoin(*line, buf);
+		if (!(*line))
+			return (NULL);
 		n = check_line(*line);
 		if (n != -1)
 			return (the_line(&(*line), n));
 		r = read(fd, buf, BUFFER_SIZE);
 	}
-	if (*line && *line[0] != '\0' && r >= 0)
+	if (*line && *line[0] != '\0')
 	{
 		last_line = ft_strdup(*line);
 		free(*line);
@@ -71,7 +73,6 @@ char	*read_line(int fd, char **line, char *buf)
 		return (last_line);
 	}
 	free(*line);
-	*line = NULL;
 	return (NULL);
 }
 
@@ -80,23 +81,35 @@ char	*get_next_line(int fd)
 	static char	*line[OPEN_MAX];
 	char		*buf;
 	int			n;
+	char		*l;
 
-	if (BUFFER_SIZE >= MAX || fd < 0 || BUFFER_SIZE <= 0)
+	if (BUFFER_SIZE <= 0 || fd < 0 || BUFFER_SIZE >= MAX)
 		return (NULL);
-	buf = malloc(BUFFER_SIZE + 1);
 	if (!line[fd])
 		line[fd] = ft_strdup("");
+	if (!line[fd])
+		return (NULL);
 	n = check_line(line[fd]);
 	if (n != -1)
 		return (the_line(&line[fd], n));
-	return (read_line(fd, &line[fd], buf));
+	buf = malloc(BUFFER_SIZE + 1);
+	if (!buf)
+	{
+		free(line[fd]);
+		return (NULL);
+	}
+	l = read_line(fd, &line[fd], buf);
+	if (!l)
+		line[fd] = NULL;
+	free(buf);
+	return (l);
 }
 
-int	main(void)
-{
-	int fd1 = open("../tests/test.txt", O_RDONLY);
-	int fd2 = open("../tests/test2.txt", O_RDONLY);
-	printf("line 1:%s", get_next_line(fd1));
-	printf("line 1:%s", get_next_line(fd2));
-	printf("line 2:%s", get_next_line(fd1));
-}
+// int	main(void)
+// {
+// 	int fd1 = open("../tests/test.txt", O_RDONLY);
+// 	int fd2 = open("../tests/test2.txt", O_RDONLY);
+// 	printf("line 1:%s", get_next_line(fd1));
+// 	printf("line 1:%s", get_next_line(fd2));
+// 	printf("line 2:%s", get_next_line(fd1));
+// }

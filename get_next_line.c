@@ -58,6 +58,8 @@ char	*read_line(int fd, char **line, char *buf)
 	{
 		buf[r] = '\0';
 		*line = ft_strjoin(*line, buf);
+		if (!(*line))
+			return (NULL);
 		n = check_line(*line);
 		if (n != -1)
 			return (the_line(&(*line), n));
@@ -71,51 +73,62 @@ char	*read_line(int fd, char **line, char *buf)
 		return (last_line);
 	}
 	free(*line);
-	*line = NULL;
 	return (NULL);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*line = NULL;
+	static char	*line;
 	char		*buf;
 	int			n;
+	char		*l;
 
-	if (BUFFER_SIZE >= MAX || fd < 0 || BUFFER_SIZE <= 0)
+	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
-	buf = malloc(BUFFER_SIZE + 1);
 	if (!line)
 		line = ft_strdup("");
+	if (!line)
+		return (NULL);
 	n = check_line(line);
 	if (n != -1)
 		return (the_line(&line, n));
-	return (read_line(fd, &line, buf));
+	buf = malloc(BUFFER_SIZE + 1);
+	if (!buf)
+	{
+		free(line);
+		return (NULL);
+	}
+	l = read_line(fd, &line, buf);
+	if (!l)
+		line = NULL;
+	free(buf);
+	return (l);
 }
 
-int	main(void)
-{
-	char *line;
-	int i;
+// int	main(void)
+// {
+// 	char *line;
+// 	int i;
 
-	int fd1 = open("../tests/test.txt", O_RDONLY);
-	int fd2 = open("../tests/test2.txt", O_RDONLY);
-	int fd3 = open("../tests/test3.txt", O_RDONLY);
-	i = 1;
-	while ((line = get_next_line(fd1)))
-	{
-		printf("line %d: %s", i++, line);
-		free(line);
-	}
-	i = 1;
-	while ((line = get_next_line(fd2)))
-	{
-		printf("line %d: %s", i++, line);
-		free(line);
-	}
-	i = 1;
-	while ((line = get_next_line(fd3)))
-	{
-		printf("line %d: %s", i++, line);
-		free(line);
-	}
-}
+// 	int fd1 = open("../tests/test.txt", O_RDONLY);
+// 	int fd2 = open("../tests/test2.txt", O_RDONLY);
+// 	int fd3 = open("../tests/test3.txt", O_RDONLY);
+// 	i = 1;
+// 	while ((line = get_next_line(fd1)))
+// 	{
+// 		printf("line %d: %s", i++, line);
+// 		free(line);
+// 	}
+// 	i = 1;
+// 	while ((line = get_next_line(fd2)))
+// 	{
+// 		printf("line %d: %s", i++, line);
+// 		free(line);
+// 	}
+// 	i = 1;
+// 	while ((line = get_next_line(fd3)))
+// 	{
+// 		printf("line %d: %s", i++, line);
+// 		free(line);
+// 	}
+// }

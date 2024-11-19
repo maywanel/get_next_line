@@ -74,11 +74,18 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		len1;
 	int		len2;
 
+	if (!s1)
+		s1 = ft_strdup("");
+	else if (!s2)
+		s2 = ft_strdup("");
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
 	new_str = malloc((len1 + len2 + 1) * sizeof(char));
 	if (!new_str)
+	{
+		free(s1);
 		return (NULL);
+	}
 	ft_strcpy(new_str, s1, len1);
 	ft_strcpy(new_str + len1, s2, len2);
 	free(s1);
